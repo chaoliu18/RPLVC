@@ -298,7 +298,7 @@ def parse_args(argv):
         '--gpu',
         type=str,
         default='0',
-        help='The gpu index for training. [0]')
+        help='The gpu index for testing. [0]')
     parser.add_argument(
         '-m',
         '--model',
@@ -321,7 +321,7 @@ def parse_args(argv):
         '--verbose',
         default=1,
         type=int,
-        help='log level.[1] 0 - mute; 1 - summary; 2 - all.')
+        help='log level.[1] 0 - Class-level log; 1 - Video-level log; 2 - Frame-level log.')
     parser.add_argument(
         '-e',
         '--encode',

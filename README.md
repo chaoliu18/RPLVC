@@ -3,14 +3,10 @@ This is project page for the paper: "Learned Video Compression with Residual Pre
 
 ![ ](fig/model.png)
 
-If you have any question or find any bug, feel free to contact:
-
-Chao Liu @ Fudan University
-
-chaoliu18@fudan.edu.cn
+If you have any question or find any bug, feel free to contact: chaoliu18@fudan.edu.cn
 
 ## Environment settings
-We used Docker to build the environment to avoid unexpected mismatch.
+We used Docker to build the environment.
 
 Pull [pytorch-1.6](https://hub.docker.com/r/pytorch/pytorch) docker image.
 
@@ -24,7 +20,7 @@ Install some necessary package.
 
     pip install scipy pytorch_msssim
 
-Install [BPG](https://bellard.org/bpg/) for the coding of I-frames. We have provided the compiled executables bpgenc and bpgdec in "./bin" folder, and you need to add the "./lib" to LD_LIBRARY_PATH before using them.
+Install [BPG](https://bellard.org/bpg/) for the coding of I-frames. We have already provided the compiled executables bpgenc and bpgdec in "./bin" folder, and you need to add the "./lib" to LD_LIBRARY_PATH before using them.
 
     export LD_LIBRARY_PATH=$(pwd)/lib:$LD_LIBRARY_PATH
 
@@ -35,7 +31,7 @@ The downloaded [pretrained models](https://drive.google.com/drive/folders/14KlBG
 We have cropped the dataset to the multiples of 64 to allow the model compress and decompress the dataset directly, following the similar manner in [OpenDVC](https://github.com/RenYang-home/OpenDVC) and [MLVC](https://github.com/JianpingLin/M-LVC_CVPR2020).
 
     ffmpeg -s WxH -pix_fmt yuv420p -i input_video.yuv -vframes N -vf crop=W_:H_:0:0 -f image2 output_path/img%06d.png
-where W, H denotes the width and height of the input sequence. Notation W_, H_ denotes the width and height of the output one, and N denotes the number of frames to be coded.
+where W, H denotes the width and height of the input sequence. Notation W_, H_ denotes the cropped width and height of the output one, and N denotes the number of frames to be coded.
 
 ## Testing
 The testing consists of two main steps: encoding and decoding.

@@ -198,10 +198,10 @@ def compress_video(net,
     enc_time = time.time() - enc_start
     if verbose >= 1:
         print(f" Encoded in {enc_time:.2f}s, hat mode |"
-              f" psnr {mean(psnr_list):.4f} |"
-              f" ms-ssim {mean(msssim_list):.4f} |"
+              f" psnr {mean(psnr_list):.3f} |"
+              f" ms-ssim {mean(msssim_list):.5f} |"
               f" bpp {mean(bpp_all_list):.4f}"
-        )
+             )
     return psnr_list, msssim_list, bpp_resi_list, bpp_mv_list, bpp_all_list
 
 def decompress_video(net,
@@ -260,11 +260,11 @@ def decompress_video(net,
                     bpp_resi  = (len(y_strings[0]) + len(z_strings[0]) + 8) * 8 / (h_y * w_y)
                     bpp_mv    = (len(y_mvd_strings[0]) + len(z_mvd_strings[0]) + 8) * 8 / (h_y * w_y)
                     bpp_all   = bpp_resi + bpp_mv
-                    out_hat = net.decompress(ref, ref2, ref3, ref4, 
-                                 mv_hat2, mv_hat3, mv_hat4, 
-                                 resi_ref, resi_ref2, resi_ref3, resi_ref4, 
-                                 y_strings, z_strings, y_mvd_strings, z_mvd_strings,
-                                 z_shape, z_mvd_shape)
+                    out_hat   = net.decompress(ref, ref2, ref3, ref4, 
+                                               mv_hat2, mv_hat3, mv_hat4, 
+                                               resi_ref, resi_ref2, resi_ref3, resi_ref4, 
+                                               y_strings, z_strings, y_mvd_strings, z_mvd_strings,
+                                               z_shape, z_mvd_shape)
 
                     x_hat     = out_hat['x_hat']['1']
                     ref4      = ref3
@@ -366,13 +366,13 @@ def test(argv):
     #for dataset in ['ClassD','ClassC','ClassE','ClassB']:
     for dataset in ['ClassD']:
         video_root_path = os.path.join("./datasets/", dataset)
-        bit_path = os.path.join('./bits/', PATH.split('/')[-1].split('.')[0], dataset)
-        rec_path = os.path.join('./recs/', PATH.split('/')[-1].split('.')[0], dataset)
-        rec_dec_path = os.path.join('./recs_dec/', PATH.split('/')[-1].split('.')[0], dataset)
+        bit_path        = os.path.join('./bits/', PATH.split('/')[-1].split('.')[0], dataset)
+        rec_path        = os.path.join('./recs/', PATH.split('/')[-1].split('.')[0], dataset)
+        rec_dec_path    = os.path.join('./recs_dec/', PATH.split('/')[-1].split('.')[0], dataset)
         if args.encode:
             t_start = time.time()
             os.system(" ".join(["mkdir", "-p", bit_path, rec_path, rec_dec_path]))
-            os.system(" ".join(["rm", bit_path+"/*", rec_path+"/*"]))
+            #os.system(" ".join(["rm", bit_path+"/*", rec_path+"/*"]))
             psnr_all_list   = []
             msssim_all_list = []
             bpp_all_list    = []
@@ -402,7 +402,7 @@ def test(argv):
             )
         if args.decode:
             t_start = time.time()
-            os.system(" ".join(["rm", rec_dec_path+"/*"]))
+            #os.system(" ".join(["rm", rec_dec_path+"/*"]))
             for bit in os.listdir(bit_path):
                 if "lvc.bin" in bit:
                     coded_frame_num = 100
@@ -417,11 +417,13 @@ def test(argv):
                                      verbose = args.verbose)
             dec_time = time.time() - t_start
             print("Summary:")
-            print(f" Decoded in {dec_time:.2f}s, hat mode")
+            print(f" Decoded in {dec_time:.2f}s, hat mode\n")
         if args.check:
+            print("Checking " + dataset)
             for recs in os.listdir(rec_path):
                 enc_rec = os.path.join(rec_path,     recs)
                 dec_rec = os.path.join(rec_dec_path, recs)
                 assert os.system(" ".join(["cmp", enc_rec, dec_rec])) == 0, "MISMATCH!!!"
+            print("  Check Pass!")
 if __name__ == "__main__":
     test(sys.argv[1:])

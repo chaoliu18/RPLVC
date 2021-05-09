@@ -13,5 +13,3 @@
 # limitations under the License.
 
 from .priors import *
-from .waseda import *
-from .fudan import *

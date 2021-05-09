@@ -26,7 +26,6 @@ import numpy as np
 #import lmdb
 import torch
 import torch.utils.data as data
-from compressai.datasets import util
 
 try:
     import mc  # import memcached

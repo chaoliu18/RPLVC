@@ -12,8 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from .utils import ImageFolder, Vimeo90kFolder, HEVCVideoFolder,Vimeo90kLMDB, Mit2Folder
-from .utils_yuv import Vimeo90kYUVFolder, Mit2YUVFolder, HEVCVideoYUVFolder, CLICYUVFolder, CLICYUVBFolder
+from .utils import ImageFolder
 
-__all__ = ["ImageFolder", "Vimeo90kFolder", "HEVCVideoFolder","Vimeo90kLMDB", "Mit2Folder",
-        "Vimeo90kYUVFolder", "Mit2YUVFolder", "HEVCVideoYUVFolder", "CLICYUVFolder", "CLICYUVBFolder"]
+__all__ = ["ImageFolder"]

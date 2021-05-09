@@ -862,7 +862,7 @@ class RPLVC(CompressionModel):
                     inputwidth = inputfeature.size()[3]
                     outfeature = F.interpolate(inputfeature, (inputheight * 2, inputwidth * 2), mode='bilinear')
                     return outfeature
-
+                self.ME_Spynet = ME_Spynet()
             def forward(self, x, ref):
                 mv = self.ME_Spynet(x, ref)
                 return mv
@@ -998,39 +998,7 @@ class RPLVC(CompressionModel):
             def forward(self, x_hat_, x_feat, resi_hat_):
                 x_pred_feat = torch.cat((x_hat_, x_feat, resi_hat_), dim=1)
                 x_hat = self.filter(x_pred_feat) + x_hat_
-                return x_hat
-        """            
-        class LmbdaToQstep(nn.Module):
-            def __init__(self, N, N_mid=32):
-                super(LmbdaToQstep, self).__init__()
-                self.fc1 = nn.Linear(1, N_mid)
-                self.leaky_relu = nn.LeakyReLU(inplace = True)
-                self.fc2 = nn.Linear(N_mid, N)
-            def forward(self, lmbda):
-                qstep = self.leaky_relu(self.fc1(lmbda))
-                qstep = F.softplus(self.fc2(qstep))
-                #qstep = F.softplus(self.fc1(lmbda))
-                return qstep.unsqueeze(-1).unsqueeze(-1)
-
-        class LmbdaToQstep(nn.Module):
-            def __init__(self, N, N_mid=32):
-                super(LmbdaToQstep, self).__init__()
-                self.net = nn.Sequential(
-                    nn.Linear(1, N_mid),
-                    nn.LeakyReLU(inplace = True),
-                    nn.Linear(N_mid, N_mid),
-                    nn.LeakyReLU(inplace = True),
-                    nn.Linear(N_mid, N_mid),
-                    nn.LeakyReLU(inplace = True),
-                    nn.Linear(N_mid, N),
-                )
-            def forward(self, lmbda):
-                qstep = self.net (lmbda)
-                qstep = F.softplus(qstep)
-                #qstep = F.sigmoid(self.fc2(qstep))
-                return qstep.unsqueeze(-1).unsqueeze(-1)
-        """
-                
+                return x_hat               
         
         """Residual Compression"""
         self.g_a = nn.Sequential(
@@ -1160,10 +1128,7 @@ class RPLVC(CompressionModel):
     @property
     def downsampling_factor(self) -> int:
         return 2 ** (4 + 2)
-    # for stat flops
-    #def forward(self, x):
-    #    ref, ref2, ref3, ref4, resi_ref, resi_ref2, resi_ref3, resi_ref4, x = x, x, x, x, x, x, x, x, x
-    #    mv_hat2, mv_hat3, mv_hat4 = x[:,:2], x[:,:2], x[:,:2]
+    
     def forward(self, ref, ref2, ref3, ref4, mv_hat2, mv_hat3, mv_hat4, resi_ref, resi_ref2, resi_ref3, resi_ref4, x):
         # motion estimation & prediction
         mv_ = self.MENet(x, ref)

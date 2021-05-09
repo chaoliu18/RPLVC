@@ -32,7 +32,7 @@ Install [BPG](https://bellard.org/bpg/) for the coding of I-frames. We have prov
 
 The downloaded [pretrained models](https://drive.google.com/drive/folders/14KlBG9Hzxj9N54fcISqyA4F97k91VU2v?usp=sharing) and the input videos should be placed in the pretrained and datasets folder. Here we have given the models and the [HEVC Class C, D Datasets](https://drive.google.com/drive/folders/1eig9qBw7qS60fNJvAqjmfsVv60DotX94?usp=sharing) on Google Cloud Drive.
 
-We have cropped the dataset to the multiples of 64 to allow the model compress and decompress the dataset directly, following the same manner in [OpenDVC](https://github.com/RenYang-home/OpenDVC) and [MLVC](https://github.com/JianpingLin/M-LVC_CVPR2020).
+We have cropped the dataset to the multiples of 64 to allow the model compress and decompress the dataset directly, following the similar manner in [OpenDVC](https://github.com/RenYang-home/OpenDVC) and [MLVC](https://github.com/JianpingLin/M-LVC_CVPR2020).
 
     ffmpeg -s WxH -pix_fmt yuv420p -i input_video.yuv -vframes N -vf crop=W_:H_:0:0 -f image2 output_path/img%06d.png
 where W, H denotes the width and height of the input sequence. Notation W_, H_ denotes the width and height of the output one, and N denotes the number of frames to be coded.
@@ -56,7 +56,7 @@ All the three can also be executed at once
     python test.py --model 0 --qp 27 --verbose 1 --gpu 0 --encode True --decode True --check True
 
 Parameter Descriptions
-Param. |Type|Default|Range| Descriptions
+Params. |Type|Default|Range| Descriptions
 :-:|:-:|:-:|:-:|:-
 model |Int|0|[0, 4]| Index of the model, the larger the index the higher the reconstructed quality.
 qp |Int|22|[0, 51]|QP value of BPG used for the 1-st I-frame coding.
@@ -69,7 +69,7 @@ check |Bool|False|False, True|Start checking Flag.
 
 The bitrate allocation between I, P frames can be flexible, and here we give some recommended QP values of BPG as shown in follow.
 
-Model Idx| BPG QP
+Model Index| BPG QP
 :-:|:-:
 0 |27
 1 |27

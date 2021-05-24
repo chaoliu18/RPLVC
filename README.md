@@ -14,11 +14,11 @@ It is recommended to use Docker to build the environment.
 
         docker pull pytorch/pytorch:1.6.0-cuda10.1-cudnn7-runtime
 
-2.  Creating docker environment.
+2.  Creating docker container.
 
         sudo nvidia-docker run -v $(pwd):$(pwd) -v /etc/localtime:/etc/localtime:ro -it -w $(pwd) pytorch/pytorch:1.6.0-cuda10.1-cudnn7-runtime
 
-3.  Installing some necessary package.
+3.  Installing some necessary packages.
 
         pip install scipy pytorch_msssim
 
@@ -38,18 +38,18 @@ where W, H denotes the width and height of the input sequence. Notation W_, H_ d
 ## Testing
 The testing consists of two main steps: encoding and decoding.
 
-1.  Encoding
+1.  Encoding.
 
         python test.py --model 0 --qp 27 --verbose 1 --gpu 0 --encode True
-2.  Decoding
+2.  Decoding.
 
         python test.py --model 0 --qp 27 --verbose 1 --gpu 0 --decode True
 In order to ensure the correctness of coding, it is also important to check the matching of encoding and decoding results.
 
--   Mismatch Check
+-   Mismatch Check.
 
         python test.py --check True
--   All the three can also be executed at once
+-   All the three can also be executed at once.
 
         python test.py --model 0 --qp 27 --verbose 1 --gpu 0 --encode True --decode True --check True
 
@@ -79,7 +79,7 @@ The class results were obtained by averaging the coding results for each sequenc
 <img src="fig/HEVCClass_B_psnr.png" width="47.5%"><img src="fig/HEVCClass_B_msssim.png" width="50%">
 <img src="fig/HEVCClass_C_psnr.png" width="48.5%"><img src="fig/HEVCClass_C_msssim.png" width="50%">
 <img src="fig/HEVCClass_D_psnr.png" width="47.5%"><img src="fig/HEVCClass_D_msssim.png" width="50%">
-(*Because of software version differences, the reproduced results of this project may be slightly different from the results in the figures.)
+(*The reproduced results of this project may be slightly different from the results in the figures because of software version differences.)
 
 ## Acknowledgment
 This project is based on [CompressAI](https://github.com/InterDigitalInc/CompressAI) and [PyTorchVideoCompression](https://github.com/ZhihaoHu/PyTorchVideoCompression).

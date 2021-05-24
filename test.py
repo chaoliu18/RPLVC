@@ -1,3 +1,26 @@
+#------------------------------------------------------------------------------
+    #
+    #  The confidential and proprietary information contained in this file may
+    #  only be used by a person authorised under and to the extent permitted
+    #  by a subsisting licensing agreement from VIP Lab.
+    #
+    #                   (C) COPYRIGHT 2021 VIP Lab.
+    #                       ALL RIGHTS RESERVED
+    #
+    #  This entire notice must be reproduced on all copies of this file
+    #  and copies of this file may only be made by a person if such person is
+    #  permitted to do so under the terms of a subsisting license agreement
+    #  from VIP Lab
+    #
+#------------------------------------------------------------------------------
+    #
+    #  Filename       : test.py
+    #  Author         : Liu Chao
+    #  Created        : 2021-05-24
+    #  Description    : Creat encode, decode, and check funcs.
+    #
+#------------------------------------------------------------------------------
+
 import os
 import time
 import struct
@@ -13,83 +36,10 @@ sys.path.append(".")
 
 import torch
 import compressai
-from   pytorch_msssim         import ms_ssim
-from   torchvision            import transforms
-from   torchvision.transforms import ToPILImage, ToTensor
+from   tools          import *
+from   pytorch_msssim import ms_ssim
+from   torchvision    import transforms
 
-
-def inverse_dict(d):
-    # We assume dict values are unique...
-    assert len(d.keys()) == len(set(d.keys()))
-    return {v: k for k, v in d.items()}
-
-def filesize(filepath: str) -> int:
-    if not Path(filepath).is_file():
-        raise ValueError(f'Invalid file "{filepath}".')
-    return Path(filepath).stat().st_size
-
-
-def load_image(filepath: str) -> Image.Image:
-    return Image.open(filepath).convert("RGB")
-
-
-def img2torch(img: Image.Image) -> torch.Tensor:
-    return ToTensor()(img).unsqueeze(0)
-
-
-def torch2img(x: torch.Tensor) -> Image.Image:
-    return ToPILImage()(x.clamp_(0, 1).squeeze())
-
-
-def write_uints(fd, values, fmt=">{:d}I"):
-    fd.write(struct.pack(fmt.format(len(values)), *values))
-
-
-def write_uchars(fd, values, fmt=">{:d}B"):
-    fd.write(struct.pack(fmt.format(len(values)), *values))
-
-
-def read_uints(fd, n, fmt=">{:d}I"):
-    sz = struct.calcsize("I")
-    return struct.unpack(fmt.format(n), fd.read(n * sz))
-
-
-def read_uchars(fd, n, fmt=">{:d}B"):
-    sz = struct.calcsize("B")
-    return struct.unpack(fmt.format(n), fd.read(n * sz))
-
-
-def write_bytes(fd, values, fmt=">{:d}s"):
-    if len(values) == 0:
-        return
-    fd.write(struct.pack(fmt.format(len(values)), values))
-
-
-def read_bytes(fd, n, fmt=">{:d}s"):
-    sz = struct.calcsize("s")
-    return struct.unpack(fmt.format(n), fd.read(n * sz))[0]
-
-def compute_psnr(a, b):
-    mse = torch.mean((a - b)**2).item()
-    if mse == 0:
-        return 999
-    else:
-        return -10 * math.log10(mse)
-
-def compute_msssim(a, b):
-    return ms_ssim(a, b, data_range=1.).item()
-
-def compute_bpp(out_net):
-    size = out_net['x_hat']['1'].size()
-    num_pixels = size[0] * size[2] * size[3]
-    return sum(torch.log(likelihoods).sum() / (-math.log(2) * num_pixels)
-              for likelihoods in out_net['likelihoods'].values()).item()
-
-def compute_bpp_mv(out_net):
-    size = out_net['x_hat']['1'].size()
-    num_pixels = size[0] * size[2] * size[3]
-    return sum(torch.log(likelihoods).sum() / (-math.log(2) * num_pixels)
-              for likelihoods in out_net['mv_likelihoods'].values()).item()
 
 def ceil_base(x, base = 2):
     return int(np.ceil((x)/base))*base
@@ -425,5 +375,6 @@ def test(argv):
                 dec_rec = os.path.join(rec_dec_path, recs)
                 assert os.system(" ".join(["cmp", enc_rec, dec_rec])) == 0, "MISMATCH!!!"
             print("  Check Pass!")
+
 if __name__ == "__main__":
     test(sys.argv[1:])

@@ -46,10 +46,10 @@ The testing consists of two main steps: encoding and decoding.
         python test.py --model 0 --qp 27 --verbose 1 --gpu 0 --decode True
 In order to ensure the correctness of coding, it is also important to check the matching of encoding and decoding results.
 
-3.  Mismatch Check
+-   Mismatch Check
 
         python test.py --check True
-4.  All the three can also be executed at once
+-   All the three can also be executed at once
 
         python test.py --model 0 --qp 27 --verbose 1 --gpu 0 --encode True --decode True --check True
 

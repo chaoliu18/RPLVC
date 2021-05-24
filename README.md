@@ -1,28 +1,30 @@
 ## Introduction
-This is project page for the paper: "Learned Video Compression with Residual Prediction and Loop Filter". This project is based on [CompressAI](https://github.com/InterDigitalInc/CompressAI) and [PyTorchVideoCompression](https://github.com/ZhihaoHu/PyTorchVideoCompression).
+This is project page for the paper: "Liu C, Sun H, Katto J, et al.Learned Video Compression with Residual Prediction and Loop Filter", which is in submission.
 
 ![ ](fig/model.png)
 
-If you have any question or find any bug, feel free to contact: chaoliu18@fudan.edu.cn
+If you have any question or find any bug, feel free to contact: 
+Chao Liu@Fudan University, 
+chaoliu18@fudan.edu.cn
 
 ## Environment settings
-We used Docker to build the environment.
+It is recommended to use Docker to build the environment.
 
-Pull [pytorch-1.6](https://hub.docker.com/r/pytorch/pytorch) docker image.
+1.  Pulling [pytorch-1.6](https://hub.docker.com/r/pytorch/pytorch) docker image.
 
-    docker pull pytorch/pytorch:1.6.0-cuda10.1-cudnn7-runtime
+        docker pull pytorch/pytorch:1.6.0-cuda10.1-cudnn7-runtime
 
-Create docker environment.
+2.  Creating docker environment.
 
-    sudo nvidia-docker run -v $(pwd):$(pwd) -v /etc/localtime:/etc/localtime:ro -it -w $(pwd) pytorch/pytorch:1.6.0-cuda10.1-cudnn7-runtime
+        sudo nvidia-docker run -v $(pwd):$(pwd) -v /etc/localtime:/etc/localtime:ro -it -w $(pwd) pytorch/pytorch:1.6.0-cuda10.1-cudnn7-runtime
 
-Install some necessary package.
+3.  Installing some necessary package.
 
-    pip install scipy pytorch_msssim
+        pip install scipy pytorch_msssim
 
-Install [BPG](https://bellard.org/bpg/) for the coding of I-frames. We have already provided the compiled executables bpgenc and bpgdec in "./bin" folder, and you need to add the "./lib" to LD_LIBRARY_PATH before using them.
+4.  Installing [BPG](https://bellard.org/bpg/) for the coding of I-frames. We have already provided the compiled executables bpgenc and bpgdec in "./bin" folder, and you need to add the "./lib" to LD_LIBRARY_PATH before using them.
 
-    export LD_LIBRARY_PATH=$(pwd)/lib:$LD_LIBRARY_PATH
+        export LD_LIBRARY_PATH=$(pwd)/lib:$LD_LIBRARY_PATH
 
 ## Downloading test sets and pre-trained models
 
@@ -36,20 +38,20 @@ where W, H denotes the width and height of the input sequence. Notation W_, H_ d
 ## Testing
 The testing consists of two main steps: encoding and decoding.
 
-Encoding
+1.  Encoding
 
-    python test.py --model 0 --qp 27 --verbose 1 --gpu 0 --encode True
-Decoding
+        python test.py --model 0 --qp 27 --verbose 1 --gpu 0 --encode True
+2.  Decoding
 
-    python test.py --model 0 --qp 27 --verbose 1 --gpu 0 --decode True
+        python test.py --model 0 --qp 27 --verbose 1 --gpu 0 --decode True
 In order to ensure the correctness of coding, it is also important to check the matching of encoding and decoding results.
 
-Mismatch Check
+3.  Mismatch Check
 
-    python test.py --check True
-All the three can also be executed at once
+        python test.py --check True
+4.  All the three can also be executed at once
 
-    python test.py --model 0 --qp 27 --verbose 1 --gpu 0 --encode True --decode True --check True
+        python test.py --model 0 --qp 27 --verbose 1 --gpu 0 --encode True --decode True --check True
 
 Parameter Descriptions
 Params. |Type|Default|Range| Descriptions
@@ -72,3 +74,16 @@ Model Index| BPG QP
 2 |27
 3 |22
 4 |22
+
+## Experimental Results
+The class results were obtained by averaging the coding results for each sequence.
+
+<img src="fig/HEVCClass_B_psnr.png" width="47.5%"><img src="fig/HEVCClass_B_msssim.png" width="50%">
+<img src="fig/HEVCClass_C_psnr.png" width="48.5%"><img src="fig/HEVCClass_C_msssim.png" width="50%">
+<img src="fig/HEVCClass_D_psnr.png" width="47.5%"><img src="fig/HEVCClass_D_msssim.png" width="50%">
+(*Because of software version differences, the reproduced results of this project may be slightly different from the results in the figures.)
+
+## Acknowledgment
+This project is based on [CompressAI](https://github.com/InterDigitalInc/CompressAI) and [PyTorchVideoCompression](https://github.com/ZhihaoHu/PyTorchVideoCompression).
+
+Thanks to Haojie Liu@Nanjing University and Zhihao Hu@Beihang University for their valuable help in this project.

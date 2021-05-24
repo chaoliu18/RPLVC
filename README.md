@@ -69,11 +69,9 @@ The bitrate allocation between I, P frames can be flexible, and here we give som
 
 Model Index| BPG QP
 :-:|:-:
-0 |27
-1 |27
-2 |27
-3 |22
-4 |22
+0,1,2 |27
+3,4 |22
+
 
 ## Experimental Results
 The class results were obtained by averaging the coding results for each sequence.

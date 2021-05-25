@@ -40,18 +40,18 @@ The testing consists of two main steps: encoding and decoding.
 
 1.  Encoding.
 
-        python test.py --model 0 --qp 27 --verbose 1 --gpu 0 --encode True
+        python test.py --model 0 --qp 27 --verbose 1 --gpu 0 --encode 1
 2.  Decoding.
 
-        python test.py --model 0 --qp 27 --verbose 1 --gpu 0 --decode True
+        python test.py --model 0 --qp 27 --verbose 1 --gpu 0 --decode 1
 In order to ensure the correctness of coding, it is also important to check the matching of encoding and decoding results.
 
 -   Mismatch Check.
 
-        python test.py --check True
+        python test.py --check 1
 -   All the three can also be executed at once.
 
-        python test.py --model 0 --qp 27 --verbose 1 --gpu 0 --encode True --decode True --check True
+        python test.py --model 0 --qp 27 --verbose 1 --gpu 0 --encode 1 --decode 1 --check 1
 
 Parameter Descriptions
 Params. |Type|Default|Range| Descriptions
@@ -60,9 +60,9 @@ model |Int|0|[0, 4]| Index of the model, the larger the index the higher the rec
 qp |Int|22|[0, 51]|QP value of BPG used for the 1-st I-frame coding.
 verbose |Int|1|[0, 2]|log level. 0 - Class-level log; 1 - Video-level log; 2 - Frame-level log.
 gpu |Int|0|[0, 3]|Index of the GPU for testing. The range of this param depend on your machine.
-encode |Bool|False|False, True|Start encoding Flag.
-decode |Bool|False|False, True|Start decoding Flag.
-check |Bool|False|False, True|Start checking Flag.
+encode |Bool|False|/|Start encoding Flag.
+decode |Bool|False|/|Start decoding Flag.
+check |Bool|False|/|Start checking Flag.
 
 
 The bitrate allocation between I, P frames can be flexible, and here we give some recommended QP values of BPG as shown in follow.

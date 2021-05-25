@@ -3,9 +3,13 @@ This is project page for the paper: "Liu C, Sun H, Katto J, et al.Learned Video 
 
 ![ ](fig/model.png)
 
-If you have any question or find any bug, feel free to contact: 
+If you have any question or find any bug, feel free to contact:
+
 Chao Liu@Fudan University, 
 chaoliu18@fudan.edu.cn
+
+Heming Sun@Waseda University,
+hemingsun@aoni.waseda.jp
 
 ## Environment settings
 It is recommended to use Docker to build the environment.

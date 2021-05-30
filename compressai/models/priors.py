@@ -940,13 +940,6 @@ class RPLVC(CompressionModel):
                     conv(3, N1, kernel_size=3, stride=1),
                     nn.LeakyReLU(inplace=True),
                 )
-                """
-                self.warp_filter = nn.Sequential(
-                    conv(12, N_mid, kernel_size=3, stride=1),
-                    nn.LeakyReLU(inplace=True),
-                    conv(N_mid, 3, kernel_size=3, stride=1),
-                )
-                """
                 self.filter_cat = ResNet(N_in=6+N1*8, N_out=N_mid, N_mid=N_mid)
                 self.smooth = conv(N_mid, 3, kernel_size=1, stride=1)
                 #self.offset = 0.1
@@ -958,23 +951,6 @@ class RPLVC(CompressionModel):
                 ref4_f = self.FeatureExtractor4(ref4)
                 
                 # Feature Aligned
-                """
-                ref_w_ = torch.cat((warp(ref, torch.cat((mv_hat[:,0:1,]+self.offset, mv_hat[:,1:2,]+self.offset), dim=1)),
-                             warp(ref, torch.cat((mv_hat[:,0:1,]+self.offset, mv_hat[:,1:2,]),         dim=1)),
-                             warp(ref, torch.cat((mv_hat[:,0:1,]+self.offset, mv_hat[:,1:2,]-self.offset), dim=1)),
-                             warp(ref, torch.cat((mv_hat[:,0:1,],         mv_hat[:,1:2,]+self.offset), dim=1)),
-                             warp(ref, torch.cat((mv_hat[:,0:1,],         mv_hat[:,1:2,]),         dim=1)),
-                             warp(ref, torch.cat((mv_hat[:,0:1,],         mv_hat[:,1:2,]-self.offset), dim=1)),
-                             warp(ref, torch.cat((mv_hat[:,0:1,]-self.offset, mv_hat[:,1:2,]+self.offset), dim=1)),
-                             warp(ref, torch.cat((mv_hat[:,0:1,]-self.offset, mv_hat[:,1:2,]),         dim=1)),
-                             warp(ref, torch.cat((mv_hat[:,0:1,]-self.offset, mv_hat[:,1:2,]-self.offset), dim=1)),
-                             warp(mv_hat, mv_hat),
-                             ref), dim=1)
-                """
-                #ref_w_ = torch.cat((warp(ref, mv_hat*1.1), warp(ref, mv_hat), warp(ref, mv_hat*0.9), ref), dim=1)                
-                
-                #ref_w = self.warp_filter(ref_w_)
-                
                 ref_w = warp(ref, mv_hat)
                 ref_fw = warp(ref_f, mv_hat)
                 ref2_fw = warp(ref2_f, mv2_hat)

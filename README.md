@@ -1,5 +1,5 @@
 ## Introduction
-This is project page for the paper: "Liu C, Sun H, Katto J, et al.Learned Video Compression with Residual Prediction and Loop Filter", which is in submission.
+This is project page for the paper: "Liu C, Sun H, Katto J, et al.Learned Video Compression with Residual Prediction and Loop Filter", which is available at [arxiv](https://arxiv.org/abs/2108.08551).
 
 ![ ](fig/model.png)
 

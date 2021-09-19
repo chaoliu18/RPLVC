@@ -58,6 +58,7 @@ In order to ensure the correctness of coding, it is also important to check the 
         python test.py --model 0 --qp 27 --verbose 1 --gpu 0 --encode 1 --decode 1 --check 1
 
 Parameter Descriptions
+
 Params. |Type|Default|Range| Descriptions
 :-:|:-:|:-:|:-:|:-
 model |Int|0|[0, 4]| Index of the model, the larger the index the higher the reconstructed quality.

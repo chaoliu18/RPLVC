@@ -1222,7 +1222,7 @@ class RPLVC(CompressionModel):
         scales_hat_mvd, means_hat_mvd = params_mvd.chunk(2, 1)
         indexes_mvd = self.gaussian_conditional_mv.build_indexes(scales_hat_mvd)
         y_mvd_strings = self.gaussian_conditional_mv.compress(y_mvd, indexes_mvd, means=means_hat_mvd)
-        y_hat_mvd = self.gaussian_conditional.decompress(y_mvd_strings, indexes_mvd, means=means_hat_mvd)
+        y_hat_mvd = self.gaussian_conditional_mv.decompress(y_mvd_strings, indexes_mvd, means=means_hat_mvd)
         mv_hat = self.g_s_mv(y_hat_mvd + y_mv_pred)
 
         # motion compensation

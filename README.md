@@ -88,7 +88,7 @@ The class results were obtained by averaging the coding results for each sequenc
 
 
 ## Updated the Models Optimized for PSNR and MSSSIM
-We have uploaded the models trained for PSNR and MSSSIM separately to the website [pretrained models](https://drive.google.com/drive/folders/14KlBG9Hzxj9N54fcISqyA4F97k91VU2v?usp=sharing). The corresponding test results can be found in the folder "logs".
+We have uploaded the models trained for PSNR and MSSSIM separately to the website [pretrained models](https://drive.google.com/drive/folders/14KlBG9Hzxj9N54fcISqyA4F97k91VU2v?usp=sharing). The corresponding test results can be found at results.xlsx.
 
 
 ## Acknowledgment
